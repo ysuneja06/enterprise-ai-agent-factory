@@ -7,7 +7,16 @@ load_dotenv()
 
 
 def get_db_connection():
-    connection = psycopg2.connect(
+    database_url = os.getenv("DATABASE_URL")
+
+    if database_url:
+        return psycopg2.connect(
+            database_url,
+            cursor_factory=RealDictCursor,
+            sslmode="require"
+        )
+
+    return psycopg2.connect(
         host=os.getenv("POSTGRES_HOST"),
         port=os.getenv("POSTGRES_PORT"),
         database=os.getenv("POSTGRES_DB"),
@@ -16,10 +25,43 @@ def get_db_connection():
         cursor_factory=RealDictCursor
     )
 
-    return connection
+
+def initialize_database():
+    connection = get_db_connection()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS campaign_executions (
+            id SERIAL PRIMARY KEY,
+            execution_id VARCHAR(255),
+            campaign_name TEXT,
+            company_name TEXT,
+            target_audience TEXT,
+            topic TEXT,
+            model_name TEXT,
+            estimated_input_tokens INTEGER,
+            estimated_output_tokens INTEGER,
+            estimated_cost_usd NUMERIC,
+            governance_mode TEXT,
+            human_approval_required BOOLEAN,
+            approval_status TEXT,
+            status TEXT,
+            start_time TIMESTAMP,
+            end_time TIMESTAMP,
+            output_file TEXT,
+            json_output_file TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+    """)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
 
 
 def insert_campaign_execution(log_record):
+    initialize_database()
+
     connection = get_db_connection()
     cursor = connection.cursor()
 
@@ -69,6 +111,7 @@ def insert_campaign_execution(log_record):
 
     cursor.close()
     connection.close()
+
 
 def update_approval_status(execution_id, approval_status):
     connection = get_db_connection()
