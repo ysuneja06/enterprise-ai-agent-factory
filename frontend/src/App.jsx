@@ -130,7 +130,7 @@ function App() {
                 lineHeight: "42px",
                 fontWeight: 800,
                 letterSpacing: "-2px",
-                color: "#050505",
+                color: "white",
               }}
             >
               asc<span style={{ color: "#6ec1ff" }}>AI</span>nd
