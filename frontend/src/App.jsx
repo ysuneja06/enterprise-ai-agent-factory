@@ -13,6 +13,7 @@ function App() {
     tone: "Executive and strategic",
     call_to_action: "Schedule a transformation strategy discussion",
     governance_mode: "Strict",
+    human_approval_required: true,
     model_name: "gpt-4o-mini",
     input_cost_per_1m_tokens: 0.15,
     output_cost_per_1m_tokens: 0.6,
