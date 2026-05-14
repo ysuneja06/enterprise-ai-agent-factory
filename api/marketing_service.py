@@ -263,6 +263,9 @@ def run_marketing_campaign(payload):
     with open(log_file, "w", encoding="utf-8") as file:
         json.dump(logs, file, indent=4)
 
-    insert_campaign_execution(log_record)
+    try:
+        insert_campaign_execution(log_record)
+    except Exception as db_error:
+        print(f"Database logging failed, continuing without blocking response: {db_error}")
 
     return structured_output
