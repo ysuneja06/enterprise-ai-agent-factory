@@ -1,0 +1,18 @@
+Using the research brief, create a first draft for the campaign:
+
+Campaign Name: {campaign_name}
+Target Audience: {target_audience}
+Campaign Goal: {campaign_goal}
+Topic: {topic}
+Tone: {tone}
+Company Name: {company_name}
+Call to Action: {call_to_action}
+
+Create an executive-style marketing email that is:
+- strategic
+- credible
+- transformation-oriented
+- executive-friendly
+- business-outcome focused
+
+Avoid hype and exaggerated AI claims.

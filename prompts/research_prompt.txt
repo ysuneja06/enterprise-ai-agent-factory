@@ -1,0 +1,24 @@
+Research the following campaign request:
+
+Campaign Name: {campaign_name}
+Target Audience: {target_audience}
+Campaign Goal: {campaign_goal}
+Topic: {topic}
+Tone: {tone}
+
+Identify:
+1. target audience concerns
+2. business pain points
+3. messaging themes
+4. suggested positioning
+5. emotional and executive engagement factors
+
+Include:
+6. relevant external references or source themes
+7. source URLs when available
+8. note whether the insights are trend-based, analyst-based, or inferred
+
+Prefer credible enterprise technology and business sources.
+Avoid low-quality or sensational sources.
+
+Keep the research brief concise, executive-relevant, and suitable for downstream marketing content creation.

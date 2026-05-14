@@ -1,0 +1,26 @@
+{
+    "campaign_name": "Enterprise AI Transformation Campaign",
+
+    "target_audience": "CIOs and enterprise technology leaders",
+
+    "campaign_goal": "Promote enterprise AI transformation advisory and implementation services.",
+
+    "topic": "Enterprise AI Transformation",
+
+    "tone": "Executive, strategic, credible, and transformation-focused",
+
+    "company_name": "ascAInd",
+
+    "call_to_action": "Schedule a strategic discussion on enterprise AI transformation.",
+
+    "human_approval_required": true,
+    
+    "governance_mode": "strict",
+    
+    "model_name": "gpt-4o-mini",
+    
+    "input_cost_per_1m_tokens": 0.15,
+    
+    "output_cost_per_1m_tokens": 0.60
+
+}

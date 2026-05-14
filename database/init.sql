@@ -1,0 +1,21 @@
+CREATE TABLE campaign_executions (
+    id SERIAL PRIMARY KEY,
+    execution_id VARCHAR(255),
+    campaign_name TEXT,
+    company_name TEXT,
+    target_audience TEXT,
+    topic TEXT,
+    model_name TEXT,
+    estimated_input_tokens INTEGER,
+    estimated_output_tokens INTEGER,
+    estimated_cost_usd NUMERIC,
+    governance_mode TEXT,
+    human_approval_required BOOLEAN,
+    approval_status TEXT,
+    status TEXT,
+    start_time TIMESTAMP,
+    end_time TIMESTAMP,
+    output_file TEXT,
+    json_output_file TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

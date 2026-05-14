@@ -1,0 +1,15 @@
+Refine the draft email for:
+
+Company Name: {company_name}
+Topic: {topic}
+Tone: {tone}
+Governance Mode: {governance_mode}
+
+Improve the content to:
+1. strengthen executive credibility
+2. improve emotional relevance
+3. align with enterprise transformation positioning
+4. avoid exaggerated or risky claims
+5. improve strategic messaging clarity
+
+Ensure the content feels advisory-led, enterprise-ready, and trustworthy.

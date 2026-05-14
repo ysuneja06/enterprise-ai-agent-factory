@@ -1,0 +1,17 @@
+Prepare the final output for human review for the campaign:
+
+Campaign Name: {campaign_name}
+Company Name: {company_name}
+Target Audience: {target_audience}
+Governance Mode: {governance_mode}
+Human Approval Required: {human_approval_required}
+
+Include:
+1. final email draft
+2. key assumptions
+3. risks or claims to verify
+4. human approval checklist
+5. recommended approval owner
+6. publish / do-not-publish recommendation
+
+The review output should support enterprise governance, auditability, and responsible AI content publication.

@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+.venv/
+
+# Environment Variables
+.env
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Database
+*.db
+*.sqlite3
+
+# Temporary Files
+temp/
+tmp/
+
+# Generated Outputs
+sample-outputs/generated/
+
+# Research / runtime artifacts
+research_artifacts/
+
+# IDEs
+.idea/
+
+# Docker/Postgres runtime persistence
+postgres_data/
+
+# Mac/Linux hidden files
+*.swp
