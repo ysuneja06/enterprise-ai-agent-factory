@@ -7,10 +7,42 @@ from datetime import datetime
 from dotenv import load_dotenv
 from crewai import Agent, Task, Crew, Process
 from database.db import insert_campaign_execution
+from pathlib import Path
+
+
+def ensure_runtime_artifacts():
+
+    Path("research_artifacts").mkdir(parents=True, exist_ok=True)
+    Path("sample-outputs/generated").mkdir(parents=True, exist_ok=True)
+    Path("logs").mkdir(parents=True, exist_ok=True)
+
+    research_file = Path("research_artifacts/latest_research_brief.md")
+
+    if not research_file.exists():
+
+        research_file.write_text(
+            """
+# Latest Research Brief
+
+Enterprise AI transformation focuses on governance,
+workflow integration, observability,
+human approval lifecycle,
+and measurable business outcomes.
+""",
+            encoding="utf-8"
+        )
+
+    logs_file = Path("logs/execution_logs.json")
+
+    if not logs_file.exists():
+        logs_file.write_text("[]", encoding="utf-8")
+
 
 def run_marketing_campaign(payload):
 
     load_dotenv()
+
+    ensure_runtime_artifacts()
 
     config = payload
     
