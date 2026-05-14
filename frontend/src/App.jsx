@@ -1,164 +1,288 @@
 import { useState } from "react";
-import "./App.css";
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL ||
+  "http://127.0.0.1:8000";
 
 function App() {
   const [formData, setFormData] = useState({
-  company_name: "ascAInd",
-  campaign_name: "Enterprise AI Transformation Campaign",
-  campaign_goal: "Promote enterprise AI transformation advisory services",
-  target_audience: "CIOs and enterprise technology leaders",
-  topic: "Enterprise AI Transformation",
-  tone: "Executive and strategic",
-  call_to_action: "Schedule a transformation strategy discussion",
-  governance_mode: "strict",
-  human_approval_required: true,
-  model_name: "gpt-4o-mini",
-  input_cost_per_1m_tokens: 0.15,
-  output_cost_per_1m_tokens: 0.60,
-});
+    company_name: "ascAInd",
+    campaign_name: "Enterprise AI Transformation Campaign",
+    target_audience: "CIOs and enterprise technology leaders",
+    topic: "Enterprise AI Transformation",
+    tone: "Executive and strategic",
+    governance_mode: "Strict",
+  });
 
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((previous) => ({
-      ...previous,
-      [name]: value,
-    }));
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const runCampaign = async () => {
+  const runWorkflow = async () => {
     setLoading(true);
-    setResult(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/run-marketing-campaign", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${API_BASE_URL}/run-marketing-campaign`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
       const data = await response.json();
+
       setResult(data);
     } catch (error) {
       setResult({
         status: "error",
-        message: "Unable to connect to backend API. Please ensure FastAPI is running.",
+        message:
+          "Unable to connect to backend API. Please ensure FastAPI is running.",
         details: error.message,
       });
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (
-    <div className="page">
-      <header className="topbar">
+    <div
+      style={{
+        backgroundColor: "#f3f4f6",
+        minHeight: "100vh",
+        padding: "40px",
+        fontFamily: "Arial",
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "#0f4c81",
+          color: "white",
+          padding: "20px",
+          borderRadius: "12px",
+          marginBottom: "40px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <div>
-          <div className="brand">asc<span>AI</span>nd</div>
-          <div className="tagline">Enterprise Transformation</div>
-        </div>
-        <div className="badge">Enterprise AI Agent Factory</div>
-      </header>
+          <h1
+            style={{
+              margin: 0,
+              fontSize: "48px",
+              fontWeight: "bold",
+            }}
+          >
+            asc<span style={{ color: "#6ec1ff" }}>AI</span>nd
+          </h1>
 
-      <main className="layout">
-        <section className="panel">
-          <h1>AI Marketing Campaign Generator</h1>
-          <p className="subtitle">
-            Governance-aware enterprise AI workflow powered by FastAPI, CrewAI,
-            OpenAI, Serper, PostgreSQL, and human approval lifecycle.
+          <p style={{ margin: 0 }}>Enterprise Transformation</p>
+        </div>
+
+        <div
+          style={{
+            border: "1px solid rgba(255,255,255,0.3)",
+            padding: "12px 20px",
+            borderRadius: "999px",
+          }}
+        >
+          Enterprise AI Agent Factory
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 2fr",
+          gap: "30px",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "30px",
+            borderRadius: "20px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+          }}
+        >
+          <h2
+            style={{
+              textAlign: "center",
+              marginBottom: "10px",
+              fontSize: "28px",
+            }}
+          >
+            AI Marketing Campaign Generator
+          </h2>
+
+          <p
+            style={{
+              textAlign: "center",
+              color: "#374151",
+              lineHeight: "1.8",
+              marginBottom: "30px",
+            }}
+          >
+            Governance-aware enterprise AI workflow powered by
+            FastAPI, CrewAI, OpenAI, Serper, PostgreSQL, and
+            human approval lifecycle.
           </p>
 
-          <div className="form-grid">
-            <label>
-              Company Name
-              <input name="company_name" value={formData.company_name} onChange={handleChange} />
-            </label>
+          {Object.keys(formData).map((key) => (
+            <div key={key} style={{ marginBottom: "20px" }}>
+              <label
+                style={{
+                  display: "block",
+                  marginBottom: "8px",
+                  fontWeight: "bold",
+                  textTransform: "capitalize",
+                }}
+              >
+                {key.replaceAll("_", " ")}
+              </label>
 
-            <label>
-              Campaign Name
-              <input name="campaign_name" value={formData.campaign_name} onChange={handleChange} />
-            </label>
-
-            <label>
-              Target Audience
-              <input name="target_audience" value={formData.target_audience} onChange={handleChange} />
-            </label>
-
-            <label>
-              Topic
-              <input name="topic" value={formData.topic} onChange={handleChange} />
-            </label>
-
-            <label>
-              Tone
-              <input name="tone" value={formData.tone} onChange={handleChange} />
-            </label>
-
-            <label>
-              Governance Mode
-              <select name="governance_mode" value={formData.governance_mode} onChange={handleChange}>
-                <option value="strict">Strict</option>
-                <option value="standard">Standard</option>
-                <option value="advisory">Advisory</option>
-              </select>
-            </label>
-          </div>
-
-          <button onClick={runCampaign} disabled={loading}>
-            {loading ? "Running Enterprise AI Workflow..." : "Run Campaign Workflow"}
-          </button>
-        </section>
-
-        <section className="panel results">
-          <h2>Execution Result</h2>
-
-          {!result && (
-            <div className="empty">
-              Run the workflow to view execution metadata, governance status,
-              generated output, and approval lifecycle.
+              {key === "governance_mode" ? (
+                <select
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleChange}
+                  style={{
+                    width: "100%",
+                    padding: "14px",
+                    borderRadius: "12px",
+                    border: "1px solid #d1d5db",
+                  }}
+                >
+                  <option value="Strict">Strict</option>
+                  <option value="Balanced">Balanced</option>
+                  <option value="Relaxed">Relaxed</option>
+                </select>
+              ) : (
+                <input
+                  type="text"
+                  name={key}
+                  value={formData[key]}
+                  onChange={handleChange}
+                  style={{
+                    width: "100%",
+                    padding: "14px",
+                    borderRadius: "12px",
+                    border: "1px solid #d1d5db",
+                  }}
+                />
+              )}
             </div>
-          )}
+          ))}
 
-          {result && (
-            <div className="result-box">
-              <div className="status-row">
-                <span>Status</span>
-                <strong>{result.status || "completed"}</strong>
+          <button
+            onClick={runWorkflow}
+            disabled={loading}
+            style={{
+              width: "100%",
+              padding: "16px",
+              borderRadius: "14px",
+              border: "none",
+              backgroundColor: "#0f4c81",
+              color: "white",
+              fontSize: "18px",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
+            {loading
+              ? "Running Enterprise AI Workflow..."
+              : "Run Campaign Workflow"}
+          </button>
+        </div>
+
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "30px",
+            borderRadius: "20px",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+          }}
+        >
+          <h2
+            style={{
+              textAlign: "center",
+              marginBottom: "30px",
+            }}
+          >
+            Execution Result
+          </h2>
+
+          {result ? (
+            <div>
+              <div
+                style={{
+                  marginBottom: "20px",
+                  paddingBottom: "20px",
+                  borderBottom: "1px solid #e5e7eb",
+                }}
+              >
+                <strong>Status</strong>
+
+                <div
+                  style={{
+                    float: "right",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {result.status}
+                </div>
               </div>
 
-              {result.execution_id && (
-                <div className="status-row">
-                  <span>Execution ID</span>
-                  <strong>{result.execution_id}</strong>
-                </div>
-              )}
+              <h3
+                style={{
+                  textAlign: "center",
+                  marginBottom: "20px",
+                }}
+              >
+                Generated Output
+              </h3>
 
-              {result.approval_status && (
-                <div className="status-row">
-                  <span>Approval Status</span>
-                  <strong>{result.approval_status}</strong>
-                </div>
-              )}
-
-              {result.estimated_cost_usd && (
-                <div className="status-row">
-                  <span>Estimated Cost</span>
-                  <strong>${result.estimated_cost_usd}</strong>
-                </div>
-              )}
-
-              <h3>Generated Output</h3>
-              <pre>
+              <pre
+                style={{
+                  backgroundColor: "#06122e",
+                  color: "white",
+                  padding: "30px",
+                  borderRadius: "20px",
+                  overflowX: "auto",
+                  lineHeight: "1.8",
+                  whiteSpace: "pre-wrap",
+                }}
+              >
                 {JSON.stringify(result, null, 2)}
               </pre>
             </div>
+          ) : (
+            <div
+              style={{
+                textAlign: "center",
+                color: "#6b7280",
+                border: "2px dashed #d1d5db",
+                padding: "60px",
+                borderRadius: "20px",
+              }}
+            >
+              Run the workflow to view execution metadata,
+              governance status, generated output, and approval
+              lifecycle.
+            </div>
           )}
-        </section>
-      </main>
+        </div>
+      </div>
     </div>
   );
 }
