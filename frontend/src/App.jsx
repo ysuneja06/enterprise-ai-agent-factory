@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
@@ -21,6 +21,7 @@ function App() {
 
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const resultRef = useRef(null);
 
   const visibleFields = [
     "company_name",
@@ -73,6 +74,9 @@ function App() {
     }
 
     setLoading(false);
+    setTimeout(() => {
+      resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
   };
 
   const content = result?.final_output?.content || "";
@@ -200,6 +204,17 @@ function App() {
               Governance-aware enterprise AI workflow powered by FastAPI,
               CrewAI, OpenAI, Serper, PostgreSQL, and human approval lifecycle.
             </p>
+            <div
+              style={{
+                textAlign: "center",
+                color: "#dc2626",
+                fontSize: "14px",
+                fontWeight: 800,
+                margin: "-10px 0 22px",
+              }}
+            >
+              Add your campaign details below
+            </div>
 
             {visibleFields.map((key) => (
               <div key={key} style={{ marginBottom: "18px" }}>
@@ -268,13 +283,31 @@ function App() {
                 cursor: loading ? "not-allowed" : "pointer",
               }}
             >
-              {loading
-                ? "Running Enterprise AI Workflow..."
-                : "Run Campaign Workflow"}
+              <div>
+                <div>
+                  {loading
+                    ? "Running Enterprise AI Workflow..."
+                    : "Run Campaign Workflow"}
+                </div>
+
+                {!loading && (
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#fecaca",
+                      marginTop: "4px",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Wait ~3 min for weeks of work
+                  </div>
+                )}
+              </div>
             </button>
           </section>
 
           <section
+            ref={resultRef}
             style={{
               backgroundColor: "white",
               padding: "34px",
